@@ -13,7 +13,7 @@ const Leaderboard = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Background Media with 50% Opacity */}
+      {/* Background Media with 100% Opacity */}
       {backgroundMedia && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           {backgroundMediaType === "video" ? (
@@ -23,13 +23,13 @@ const Leaderboard = () => {
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-50"
+              className="absolute inset-0 w-full h-full object-cover opacity-100"
             />
           ) : (
             <img
               src={backgroundMedia}
               alt="Background"
-              className="absolute inset-0 w-full h-full object-cover opacity-50"
+              className="absolute inset-0 w-full h-full object-cover opacity-100"
             />
           )}
         </div>
