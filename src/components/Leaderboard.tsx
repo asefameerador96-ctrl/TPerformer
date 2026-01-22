@@ -37,9 +37,6 @@ const Leaderboard = () => {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        {/* Subtle gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/50 via-background to-background" />
-        
         <div className="container relative pt-12 pb-8">
           {/* Header with Logo */}
           <div className="text-center mb-12">
