@@ -54,16 +54,16 @@ const Leaderboard = () => {
 
             {/* Company Name */}
             <p className="text-muted-foreground text-sm tracking-widest uppercase mb-4">
-              Abul Khair Tobacco Company Limited
+              X Factor Unlocked
             </p>
             
             {/* Week Badge */}
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
-              <span className="text-primary font-medium text-sm">Week {config.weekNumber} Rankings</span>
+              <span className="text-primary font-medium text-sm">Week 3 Rankings</span>
             </div>
 
             <h1 className="font-display text-4xl md:text-6xl font-semibold mb-4 tracking-tight text-foreground">
-              National Leaderboard
+              XForce Leaderboard
             </h1>
             <p className="text-muted-foreground text-lg max-w-md mx-auto">
               Compete with Sales Stars nationally and climb the ranks
