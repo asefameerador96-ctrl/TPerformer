@@ -200,6 +200,12 @@ interface LeaderboardContextType {
   setTsoData: React.Dispatch<React.SetStateAction<TSOData[]>>;
   config: LeaderboardConfig;
   setConfig: React.Dispatch<React.SetStateAction<LeaderboardConfig>>;
+  logo: string; // Logo image URL or base64
+  setLogo: React.Dispatch<React.SetStateAction<string>>;
+  backgroundMedia: string; // Background image/video URL or base64
+  setBackgroundMedia: React.Dispatch<React.SetStateAction<string>>;
+  backgroundMediaType: "image" | "video"; // Type of background media
+  setBackgroundMediaType: React.Dispatch<React.SetStateAction<"image" | "video">>;
   updateTSO: (id: string, data: Partial<TSOData>) => void;
   addTSO: (data: Omit<TSOData, "id">) => void;
   deleteTSO: (id: string) => void;
@@ -210,6 +216,9 @@ const LeaderboardContext = createContext<LeaderboardContextType | undefined>(und
 export const LeaderboardProvider = ({ children }: { children: ReactNode }) => {
   const [tsoData, setTsoData] = useState<TSOData[]>(initialTSOData);
   const [config, setConfig] = useState<LeaderboardConfig>({ weekNumber: 12 });
+  const [logo, setLogo] = useState<string>("");
+  const [backgroundMedia, setBackgroundMedia] = useState<string>("");
+  const [backgroundMediaType, setBackgroundMediaType] = useState<"image" | "video">("image");
 
   const updateTSO = (id: string, data: Partial<TSOData>) => {
     setTsoData((prev) =>
@@ -231,7 +240,21 @@ export const LeaderboardProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <LeaderboardContext.Provider
-      value={{ tsoData, setTsoData, config, setConfig, updateTSO, addTSO, deleteTSO }}
+      value={{
+        tsoData,
+        setTsoData,
+        config,
+        setConfig,
+        logo,
+        setLogo,
+        backgroundMedia,
+        setBackgroundMedia,
+        backgroundMediaType,
+        setBackgroundMediaType,
+        updateTSO,
+        addTSO,
+        deleteTSO,
+      }}
     >
       {children}
     </LeaderboardContext.Provider>

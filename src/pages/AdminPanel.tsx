@@ -13,14 +13,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Upload, Trash2, Image as ImageIcon, ArrowLeft, LogOut, Download } from "lucide-react";
+import { Upload, Trash2, Image as ImageIcon, ArrowLeft, LogOut, Download, Settings } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import aktLogo from "@/assets/akt-logo.png";
 import { parseCSV, downloadCSVTemplate } from "@/lib/csvParser";
 
 const AdminPanel = () => {
-  const { tsoData, setTsoData, config, setConfig } = useLeaderboard();
+  const { tsoData, setTsoData, logo, setLogo, backgroundMedia, setBackgroundMedia, backgroundMediaType, setBackgroundMediaType } = useLeaderboard();
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [uploadingImageId, setUploadingImageId] = useState<string | null>(null);
@@ -70,6 +70,50 @@ const AdminPanel = () => {
     const updated = tsoData.filter((tso) => tso.id !== id);
     setTsoData(updated);
     toast.success("TSO deleted successfully");
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const logoData = event.target?.result as string;
+        setLogo(logoData);
+        toast.success("Logo uploaded successfully");
+      } catch (error) {
+        toast.error("Failed to upload logo");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleBackgroundMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Determine if it's a video or image
+    const isVideo = file.type.startsWith("video/");
+    const isImage = file.type.startsWith("image/");
+
+    if (!isVideo && !isImage) {
+      toast.error("Please upload an image or video file");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const mediaData = event.target?.result as string;
+        setBackgroundMedia(mediaData);
+        setBackgroundMediaType(isVideo ? "video" : "image");
+        toast.success(`Background ${isVideo ? "video" : "image"} uploaded successfully`);
+      } catch (error) {
+        toast.error("Failed to upload background media");
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleLogout = () => {
@@ -157,6 +201,95 @@ const AdminPanel = () => {
                 Download Template
               </Button>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* TSO List with Image Upload */}
+        <Card className="bg-card border-border mb-8">
+          <CardHeader>
+            <CardTitle className="text-white">Logo Settings</CardTitle>
+            <CardDescription>Upload a logo to display at the top of the leaderboard</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-4 items-center">
+              {logo && (
+                <div className="relative w-24 h-24 flex-shrink-0">
+                  <img
+                    src={logo}
+                    alt="Current Logo"
+                    className="w-full h-full object-contain rounded-lg bg-slate-600 p-2"
+                  />
+                </div>
+              )}
+              <Label htmlFor="logo-upload" className="cursor-pointer flex-1">
+                <div className="flex items-center justify-center w-full px-6 py-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-colors">
+                  <div className="text-center">
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <p className="font-medium text-foreground">Click to upload logo</p>
+                    <p className="text-sm text-muted-foreground">PNG, JPG, or SVG</p>
+                  </div>
+                </div>
+                <input
+                  id="logo-upload"
+                  type="file"
+                  accept=".png,.jpg,.jpeg,.svg,.gif"
+                  onChange={handleLogoUpload}
+                  className="hidden"
+                />
+              </Label>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Background Media Upload */}
+        <Card className="bg-card border-border mb-8">
+          <CardHeader>
+            <CardTitle className="text-white">Background Media</CardTitle>
+            <CardDescription>Upload an image, GIF, or video for the leaderboard background (50% opacity)</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-4 items-start">
+              {backgroundMedia && (
+                <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-slate-600">
+                  {backgroundMediaType === "video" ? (
+                    <video
+                      src={backgroundMedia}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                    />
+                  ) : (
+                    <img
+                      src={backgroundMedia}
+                      alt="Background Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+              )}
+              <Label htmlFor="background-upload" className="cursor-pointer flex-1">
+                <div className="flex items-center justify-center w-full px-6 py-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-colors">
+                  <div className="text-center">
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <p className="font-medium text-foreground">Click to upload background</p>
+                    <p className="text-sm text-muted-foreground">Image, GIF, or Video (MP4, WebM)</p>
+                  </div>
+                </div>
+                <input
+                  id="background-upload"
+                  type="file"
+                  accept=".png,.jpg,.jpeg,.gif,.svg,.mp4,.webm,.mov,.avi"
+                  onChange={handleBackgroundMediaUpload}
+                  className="hidden"
+                />
+              </Label>
+            </div>
+            {backgroundMedia && (
+              <p className="text-sm text-muted-foreground">
+                Current background: {backgroundMediaType === "video" ? "Video" : "Image"}
+              </p>
+            )}
           </CardContent>
         </Card>
 

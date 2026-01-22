@@ -4,7 +4,7 @@ import { useLeaderboard } from "@/context/LeaderboardContext";
 import aktLogo from "@/assets/akt-logo.png";
 
 const Leaderboard = () => {
-  const { tsoData, config } = useLeaderboard();
+  const { tsoData, config, logo, backgroundMedia, backgroundMediaType } = useLeaderboard();
 
   // Sort by Overall % and get top 10
   const sortedData = [...tsoData].sort((a, b) => b.overallPercent - a.overallPercent).slice(0, 10);
@@ -12,7 +12,29 @@ const Leaderboard = () => {
   const restOfPlayers = sortedData.slice(3);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Background Media with 50% Opacity */}
+      {backgroundMedia && (
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          {backgroundMediaType === "video" ? (
+            <video
+              src={backgroundMedia}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-50"
+            />
+          ) : (
+            <img
+              src={backgroundMedia}
+              alt="Background"
+              className="absolute inset-0 w-full h-full object-cover opacity-50"
+            />
+          )}
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Subtle gradient background */}
@@ -24,8 +46,8 @@ const Leaderboard = () => {
             {/* Logo */}
             <div className="flex justify-center mb-6">
               <img 
-                src={aktLogo} 
-                alt="Abul Khair Tobacco" 
+                src={logo || aktLogo} 
+                alt="Leaderboard Logo" 
                 className="h-24 w-auto"
               />
             </div>
