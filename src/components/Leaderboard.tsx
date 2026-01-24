@@ -50,19 +50,19 @@ const Leaderboard = () => {
             </div>
 
             {/* Company Name */}
-            <p className="text-white opacity-50 text-sm tracking-widest uppercase mb-4">
+            <p className="text-white text-sm tracking-widest uppercase mb-4">
               X Factor Unlocked
             </p>
             
             {/* Week Badge */}
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
-              <span className="text-white opacity-50 font-medium text-sm">Week 3 Rankings</span>
+              <span className="text-white font-medium text-sm">Week 3 Rankings</span>
             </div>
 
-            <h1 className="font-display text-4xl md:text-6xl font-semibold mb-4 tracking-tight text-white opacity-50">
+            <h1 className="font-display text-4xl md:text-6xl font-semibold mb-4 tracking-tight text-white">
               XForce Leaderboard
             </h1>
-            <p className="text-white opacity-50 text-lg max-w-md mx-auto">
+            <p className="text-white text-lg max-w-md mx-auto">
               Compete with Sales Stars nationally and climb the ranks
             </p>
           </div>
