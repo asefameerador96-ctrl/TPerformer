@@ -56,7 +56,7 @@ const Leaderboard = () => {
             
             {/* Week Badge */}
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
-              <span className="text-white font-medium text-sm">24th January 2026</span>
+              <span className="text-white font-medium text-sm">22nd January 2026</span>
             </div>
 
             <h1 className="font-display text-4xl md:text-6xl font-semibold mb-4 tracking-tight text-white">
